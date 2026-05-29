@@ -5,22 +5,27 @@ const fechaActual = data.currentDate
 
 crearTarjetas(eventos)
 
-function crearTarjetas(arrayEventos){
+function crearTarjetas(arrayEventos) {
 
     let tarjetas = ""
 
-    for(let evento of arrayEventos){
+    for (let evento of arrayEventos) {
 
         tarjetas += `
         
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow">
 
-                <img src="https://picsum.photos/400/200"
-                class="card-img-top">
+                        <img src="${evento.image}"
+                        class="card-img-top">
 
-                <div class="card-body d-flex flex-column">
-
+                        <div class="card-body d-flex flex-column">
+                        <h4 class="card-title">
+                        ${evento.date}
+                    </h4>
+                        <h5 class="card-title">
+                        ${evento.category}
+                    </h4>
                     <h5 class="card-title">
                         ${evento.name}
                     </h5>

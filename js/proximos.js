@@ -1,73 +1,56 @@
-<!DOCTYPE html>
-<html lang="es">
+const contenedor = document.getElementById("elementosproximos")
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos Próximos</title>
+const eventos = data.events
+const fechaActual = data.currentDate
 
-    <link rel="stylesheet" href="./css/stile.css">
+crearTarjetas(eventos)
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+function crearTarjetas(arrayEventos){
 
-<body>
+    let tarjetas = ""
 
-    <header>
-        <h1>Mundo Eventos</h1>
-    </header>
+    for(let evento of arrayEventos){
+        if( fechaActual<evento.date ){
+        tarjetas += `
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <img src="${evento.image}"
+                class="card-img-top">
 
-        <div class="container">
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">
+                        ${evento.date}
+                    </h6>
+                        <h6 class="card-title">
+                        ${evento.category}
+                    </h6>
+                    <h5 class="card-title">
+                        ${evento.name}
+                    </h5>
 
-            <a class="navbar-brand" href="index.html">
-                Inicio
-            </a>
+                    <p class="card-text">
+                        ${evento.description}
+                    </p>
 
-            <div>
+                    <p>
+                        <strong>Precio:</strong>
+                        $${evento.price}
+                    </p>
 
-                <a class="nav-link d-inline text-white" href="proximos.html">
-                    Próximos
-                </a>
+                    <a href="detalle.html"
+                    class="btn btn-dark mt-auto">
+                    Ver Detalle
+                    </a>
 
-                <a class="nav-link d-inline text-white" href="pasados.html">
-                    Pasados
-                </a>
-
-                <a class="nav-link d-inline text-white" href="contacto.html">
-                    Contacto
-                </a>
-
-                <a class="nav-link d-inline text-white" href="estadisticas.html">
-                    Estadísticas
-                </a>
+                </div>
 
             </div>
-
         </div>
 
-    </nav>
-
-    <main class="container mt-4">
-
-        <h2 class="text-center mb-4">
-            Eventos Próximos
-        </h2>
-
-        <div class="row" id="elementos">
-
-        </div>
-
-    </main>
-
-    <footer>
-        <p>aguante messi</p>
-    </footer>
-
-    <script src="./js/data.js"></script>
-    <script src="./js/proximos.js"></script>
-
-</body>
-
-</html>
+        `
+    }
+    }
+    contenedor.innerHTML = tarjetas
+}
