@@ -7,8 +7,6 @@ body{
 
 header{
     background:
-    linear-gradient(rgba(88,28,135,0.7),
-    rgba(126,34,206,0.7)),
     url('https://picsum.photos/1600/500');
 
     background-size: cover;
