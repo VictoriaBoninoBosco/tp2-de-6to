@@ -1,7 +1,62 @@
 const contenedor = document.getElementById("elementos")
 
-const eventos = data.events
+let eventos = []
 
+fetch("js/eventos.json")
+.then(response => response.json())
+.then(data => {
+    console.log("Datos cargados:", data)
+
+    eventos = data.events
+
+    crearTarjetas(eventos)
+})
+.catch(error => {
+    console.log("ERROR:", error)
+})
+
+function crearTarjetas(arrayEventos){
+
+    let tarjetas = ""
+
+    for(let evento of arrayEventos){
+
+        tarjetas += `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+
+                <img src="${evento.image}" class="card-img-top">
+
+                <div class="card-body d-flex flex-column">
+
+                    <h6>${evento.date}</h6>
+
+                    <h6>${evento.category}</h6>
+
+                    <h5 class="card-title">${evento.name}</h5>
+
+                    <p class="card-text">${evento.description}</p>
+
+                    <p>
+                        <strong>Precio:</strong> $${evento.price}
+                    </p>
+
+                    <a href="detalle.html?id=${evento._id}"
+                    class="btn btn-dark mt-auto">
+                        Ver más
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+        `
+    }
+
+    contenedor.innerHTML = tarjetas
+}
+
+//--------------------FRkilotfrlosw-------------------
 const contenedorCategorias =
 document.getElementById("contenedorCategorias")
 
@@ -17,50 +72,36 @@ const categorias = [
 let checks = ""
 
 for(let categoria of categorias){
-
     checks += `
-    
     <label class="me-3">
         <input type="checkbox" value="${categoria}">
         ${categoria}
     </label>
-
     `
 }
 
 contenedorCategorias.innerHTML = checks
 
 const checkboxes =
-document.querySelectorAll(
-"#contenedorCategorias input"
-)
+document.querySelectorAll("#contenedorCategorias input")
 
 for(let checkbox of checkboxes){
-    checkbox.addEventListener(
-        "change",
-        filtrarEventos
-    )
+    checkbox.addEventListener("change", filtrarEventos)
 }
 
 const buscador = document.getElementById("buscador")
 
 buscador.addEventListener("input", filtrarEventos)
 
-crearTarjetas(eventos)
-
 function filtrarEventos(){
 
-    const texto =
-    buscador.value.toLowerCase()
+    const texto = buscador.value.toLowerCase()
 
     const seleccionadas = []
 
     for(let checkbox of checkboxes){
-
         if(checkbox.checked){
-            seleccionadas.push(
-                checkbox.value
-            )
+            seleccionadas.push(checkbox.value)
         }
     }
 
@@ -73,66 +114,8 @@ function filtrarEventos(){
         seleccionadas.length === 0 ||
         seleccionadas.includes(evento.category)
 
-        return coincideBusqueda &&
-        coincideCategoria
-
+        return coincideBusqueda && coincideCategoria
     })
 
     crearTarjetas(filtrados)
-}
-
-function crearTarjetas(arrayEventos){
-
-    let tarjetas = ""
-
-    for(let evento of arrayEventos){
-
-        tarjetas += `
-        
-        <div class="col-md-4 mb-4">
-
-            <div class="card h-100 shadow">
-
-                <img
-                src="${evento.image}"
-                class="card-img-top">
-
-                <div class="card-body d-flex flex-column">
-
-                    <h6>
-                        ${evento.date}
-                    </h6>
-
-                    <h6>
-                        ${evento.category}
-                    </h6>
-
-                    <h5 class="card-title">
-                        ${evento.name}
-                    </h5>
-
-                    <p class="card-text">
-                        ${evento.description}
-                    </p>
-
-                    <p>
-                        <strong>Precio:</strong>
-                        $${evento.price}
-                    </p>
-
-                    <a href="detalle.html"
-                    class="btn btn-dark mt-auto">
-                    Ver Detalle
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        `
-    }
-
-    contenedor.innerHTML = tarjetas
 }
